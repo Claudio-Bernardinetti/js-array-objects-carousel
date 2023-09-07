@@ -4,6 +4,115 @@
     box-sizing: border-box;
 }
 
-h1 {
-    color: blue;
+
+ img
+{
+	max-width: 100%;
+	display: block;
 }
+
+.container
+{
+	width: 70%;
+	max-width: 1176px;
+	margin: auto
+}
+
+.row
+{
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0 -1rem
+} 
+
+/* CSS Nesting feature (NEW) */
+ .slider
+{
+	position: relative;
+	margin-top: 2rem;
+	height: 600px;
+
+	& .images
+	{
+		flex-grow: 1;
+
+		& img.active
+		{
+			width: 100%;
+			height: 600px;
+			object-fit: cover;
+			object-position: center;
+            border: 2px solid black;
+		}
+
+		& img:not(.active)
+		{
+			display: none;
+		}
+
+	}
+
+}  
+
+.slider .images img.active
+{
+	width: 100%;
+	height: 600px;
+	object-fit: cover;
+	object-position: center;
+} 
+
+.slider .images img:not(.active)
+{
+	display: none;
+} 
+
+.slider .controls
+{
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	height: 100%;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+}
+
+.controls .prev,
+.controls .next
+{
+	width: 26px;
+	height: 26px;
+	background-color: white;
+	border-radius: 50%;
+    border: 2px solid black;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.d-flex
+{
+	display: flex;
+}
+
+/* Thumbs */
+
+.slider .thumbnails img:not(.active)
+{
+	filter: grayscale();
+}
+
+.thumbnails
+{
+	height: 600px;
+}
+
+.thumb
+{
+	width: 150px;
+	height: calc(100% / 5);
+	object-fit: cover;
+    border: 2px solid black;
+}  
