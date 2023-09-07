@@ -17,9 +17,9 @@ E se volessi un bottone per invertire la "direzione" del carosello? */
 
 const slides = [
     {
-        animal: 'pecora',
+        animal: 'aquila',
         sequence: 1,
-        photo: './assets/img/alex-lvrs-1WOY5Pj1KqU-unsplash.jpg'
+        photo: './assets/img/zdenek-machacek-3zf2dD36Tms-unsplash.jpg'
     },
     {
         animal: 'scimmia',
@@ -37,10 +37,11 @@ const slides = [
         photo: './assets/img/nikolett-emmert-tuQGZ6U7P2A-unsplash.jpg'
     },
     {
-        animal: 'aquila',
+        animal: 'pecora',
         sequence: 5,
-        photo: './assets/img/zdenek-machacek-3zf2dD36Tms-unsplash.jpg'
+        photo: './assets/img/alex-lvrs-1WOY5Pj1KqU-unsplash.jpg'
     },
+    
 ];
 
 let activeSlide = 0;
@@ -52,17 +53,24 @@ const prevEl = document.querySelector('.prev');
 
 function createSlides() {
     for (let i = 0; i < slides.length; i++) {
-        const slidePath = slides[i].photo;
+        const slide = slides[i];
         
         // for each slide we create the markup
         const slideMarkup = `
-                                <img class="${activeSlide === i ? 'active' : '' }" src="${slidePath}" alt="">
+                                <div class="card ${activeSlide === i ? 'active' : '' }">
+                                    <div class="cardHead">
+                                        <img src="${slide.photo}" alt="" style="height: 552px; width: 400px;">
+                                    </div>
+                                    <div class="cardBody">
+                                        <h3>${slide.animal}</h3>
+                                        <p>${slide.sequence}</p>
+                                    </div>
+                                </div>
                             `
         
-        sliderImagesEl.insertAdjacentHTML('beforeend', slideMarkup)
+        sliderImagesEl.insertAdjacentHTML("beforeend", slideMarkup)
     }
 }
-
 function createThumbnails() {
     for (let i = 0; i < slides.length; i++) {
       const thumbPath = slides[i].photo;
@@ -73,11 +81,12 @@ function createThumbnails() {
 }
 
 
-const slideInfoEl = document.querySelector('.slide-info');
+const slideInfoEl = document.querySelector('.slide_info');
+
 
 function updateActiveSlide(newActiveSlide) {
     // select the current slide
-    const currentSlide = document.querySelectorAll('.slider .images > img')[activeSlide];
+    const currentSlide = document.querySelectorAll('.slider .images .card')[activeSlide];
     
     // remove the active class from the current slide
     currentSlide.classList.remove('active');
@@ -91,10 +100,10 @@ function updateActiveSlide(newActiveSlide) {
     activeSlide = newActiveSlide;
     
     // select the next slide
-    const nextSlide = document.querySelectorAll('.slider .images > img')[activeSlide];
+    const nextSlide = document.querySelectorAll('.slider .images .card')[activeSlide];
     
-    // add the active class to the next slide
-    nextSlide.classList.add('active');
+    // // add the active class to the next slide
+     nextSlide.classList.add('active');
     
     // select the next thumb
     const nextThumb = document.querySelectorAll('.thumb')[activeSlide];
@@ -103,8 +112,9 @@ function updateActiveSlide(newActiveSlide) {
     nextThumb.classList.add('active');
     
     // update the slide info text
-    console.log(slideInfoEl);
-    slideInfoEl.textContent = `${slides[activeSlide].animal} - ${slides[activeSlide].sequence}`;
+    //console.log(slideInfoEl);
+    //slideInfoEl.textContent = `${slides[activeSlide].animal}  ${slides[activeSlide].sequence}`;
+    
 }
 
 createSlides();
@@ -138,18 +148,22 @@ prevEl.addEventListener('click', function() {
 
 ////////////////////////////////////////////////////////////
 // Imposta un intervallo per cambiare l'immagine attiva ogni 3 secondi
-// setInterval(() => {
-//     // Rimuovi la classe active dall'immagine corrente
-//     slidesImages[activeSlide].classList.remove('active');
-    
-//     // Incrementa l'indice dell'immagine attiva
-//     activeSlide++;
-    
-//     // Se l'indice supera il numero di immagini, riparti da zero
-//     if (activeSlide >= slidesImages.length) {
-//         activeSlide = 0;
-//     }
-    
-//     // Aggiungi la classe active alla nuova immagine attiva
-//     slidesImages[activeSlide].classList.add('active');
-// }, 3000);
+ 
+const slideInterval = 3000;
+
+// Crea una funzione per far scorrere automaticamente le slide
+function autoSlide() {
+    let newActiveSlide;
+  
+    if (activeSlide === slides.length - 1) {
+        newActiveSlide = 0;
+    } else {
+        newActiveSlide = activeSlide + 1;
+    }
+  
+    updateActiveSlide(newActiveSlide);
+}
+
+// Avvia lo scorrimento automatico delle slide
+const autoSlideInterval = setInterval(autoSlide, slideInterval);
+
