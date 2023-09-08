@@ -135,6 +135,12 @@ function autoSlide() {
 }
 
 nextEl.addEventListener('click', function() {
+
+    // Se esiste già un intervallo, lo cancella prima di crearne uno nuovo
+    if (autoSlideInterval) {
+        clearInterval(autoSlideInterval);
+    }
+
     // Avvia lo scorrimento automatico delle slide
     autoSlideInterval = setInterval(autoSlide, slideInterval);
 });
@@ -144,16 +150,21 @@ nextEl.addEventListener('click', function() {
   
 // Crea una funzione per far scorrere automaticamente le slide indietro
 function autoSlideBack() {
+
     let newActiveSlide;
+
     if (activeSlide === 0) {
         newActiveSlide = slides.length - 1;
+
     } else {
         newActiveSlide = activeSlide - 1;
     }
+
     updateActiveSlide(newActiveSlide);
 }
 
 prevEl.addEventListener('click', function() {
+    
     // Se esiste già un intervallo, lo cancella prima di crearne uno nuovo
     if (autoSlideInterval) {
         clearInterval(autoSlideInterval);
