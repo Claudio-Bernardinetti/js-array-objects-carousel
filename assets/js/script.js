@@ -17,27 +17,27 @@ E se volessi un bottone per invertire la "direzione" del carosello? */
 
 const slides = [
     {
-        animal: 'aquila',
+        animal: 'Aquila',
         sequence: 1,
         photo: './assets/img/zdenek-machacek-3zf2dD36Tms-unsplash.jpg'
     },
     {
-        animal: 'scimmia',
+        animal: 'Scimmia',
         sequence: 2,
         photo: './assets/img/manas-manikoth-xmFMjMT6OdQ-unsplash.jpg'
     },
     {
-        animal: 'cane',
+        animal: 'Cane',
         sequence: 3,
         photo: './assets/img/nikolaos-anastasopoulos-2BEAifRhETo-unsplash.jpg'
     },
     {
-        animal: 'ape',
+        animal: 'Ape',
         sequence: 4,
         photo: './assets/img/nikolett-emmert-tuQGZ6U7P2A-unsplash.jpg'
     },
     {
-        animal: 'pecora',
+        animal: 'Pecora',
         sequence: 5,
         photo: './assets/img/alex-lvrs-1WOY5Pj1KqU-unsplash.jpg'
     },
@@ -59,7 +59,7 @@ function createSlides() {
         const slideMarkup = `
                                 <div class="card ${activeSlide === i ? 'active' : '' }">
                                     <div class="cardHead">
-                                        <img src="${slide.photo}" alt="" style="height: 552px; width: 400px;">
+                                        <img src="${slide.photo}" alt="" style="height: 553px; width: 400px;">
                                     </div>
                                     <div class="cardBody">
                                         <h3>${slide.animal}</h3>
@@ -120,50 +120,50 @@ function updateActiveSlide(newActiveSlide) {
 createSlides();
 createThumbnails();
 
-nextEl.addEventListener('click', function() {
-  
-  let newActiveSlide;
-  
-  if (activeSlide === slides.length - 1) {
-      newActiveSlide = 0;
-  } else {
-      newActiveSlide = activeSlide + 1;
-  }
-  
-  updateActiveSlide(newActiveSlide);
-});
-
-prevEl.addEventListener('click', function() {
-  
-  let newActiveSlide;
-  
-  if (activeSlide === 0) {
-      newActiveSlide = slides.length - 1;
-  } else {
-      newActiveSlide = activeSlide - 1;
-  }
-  
-  updateActiveSlide(newActiveSlide);
-});
-
-////////////////////////////////////////////////////////////
-// Imposta un intervallo per cambiare l'immagine attiva ogni 3 secondi
- 
 const slideInterval = 3000;
+let autoSlideInterval;
 
 // Crea una funzione per far scorrere automaticamente le slide
 function autoSlide() {
     let newActiveSlide;
-  
     if (activeSlide === slides.length - 1) {
         newActiveSlide = 0;
     } else {
         newActiveSlide = activeSlide + 1;
     }
-  
     updateActiveSlide(newActiveSlide);
 }
 
-// Avvia lo scorrimento automatico delle slide
-const autoSlideInterval = setInterval(autoSlide, slideInterval);
+nextEl.addEventListener('click', function() {
+    // Avvia lo scorrimento automatico delle slide
+    autoSlideInterval = setInterval(autoSlide, slideInterval);
+});
+
+
+
+  
+// Crea una funzione per far scorrere automaticamente le slide indietro
+function autoSlideBack() {
+    let newActiveSlide;
+    if (activeSlide === 0) {
+        newActiveSlide = slides.length - 1;
+    } else {
+        newActiveSlide = activeSlide - 1;
+    }
+    updateActiveSlide(newActiveSlide);
+}
+
+prevEl.addEventListener('click', function() {
+    // Se esiste già un intervallo, lo cancella prima di crearne uno nuovo
+    if (autoSlideInterval) {
+        clearInterval(autoSlideInterval);
+    }
+    // Avvia lo scorrimento automatico delle slide all'indietro
+    autoSlideInterval = setInterval(autoSlideBack, slideInterval);
+});
+ 
+
+
+
+    
 

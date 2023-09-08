@@ -64,12 +64,18 @@ body {
     justify-content: center;
 }
 
+.controls .prev,
+.controls .next:hover{
+    cursor: pointer;
+}
+
 .d-flex {
     display: flex;
 }
 
 .cardBody {
-    background-color: azure;
+    margin-top: -5px; 
+    padding-left: 1rem;
 }
 
 /* Thumbs */
