@@ -6,8 +6,9 @@
 
 
 .container {
-    margin-left: 30%;
-    margin-right: 35%;
+    display: flex;
+    justify-content: center;
+    
 }
 .slider {
     position: relative;
